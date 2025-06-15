@@ -101,7 +101,7 @@ See the examples directory.
 - `split`: Split direction (`horizontal` or `vertical`)
 - `commands`: List of commands to execute in the pane
 - `focus`: Set to `true` to focus this pane initially
-- `size`: Pane size (future feature)
+- `size`: Pane size specification (percentage like "30%" or lines/columns like "10")
 
 ### Example Layout Files
 
@@ -111,6 +111,29 @@ The project includes several example layout files in the `examples/` directory:
 - `examples/dev.yaml` - 4-pane development workspace
 
 Use these as templates for your own custom layouts!
+
+#### Size Specification Examples
+
+```yaml
+panes:
+  # Main editor (no size = uses remaining space)
+  - id: "editor"
+    commands: ["nvim ."]
+
+  # Sidebar taking 30% of width
+  - id: "sidebar"
+    split: "vertical"
+    size: "30%"
+    commands:
+      - "ls -la"
+
+  # Bottom pane with fixed 15 lines height
+  - id: "terminal"
+    split: "horizontal"
+    size: "15"
+    commands:
+      - "htop"
+```
 
 ## Update
 
