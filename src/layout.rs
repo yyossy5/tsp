@@ -120,39 +120,61 @@ impl LayoutConfig {
     fn adjust_pane_sizes(&self) -> Result<(), Box<dyn std::error::Error>> {
         // Wait a moment for layout to settle
         std::thread::sleep(std::time::Duration::from_millis(100));
-        
+
         // First pass: adjust individual pane sizes
         for (index, pane) in self.panes.iter().enumerate() {
             if let Some(size) = &pane.size {
                 let split_direction = pane.split.as_deref().unwrap_or("vertical");
-                
+
                 if size.ends_with('%') {
                     let percentage = size.trim_end_matches('%');
-                    
+
                     // Resize based on split direction
                     let resize_direction = match split_direction {
                         "horizontal" => "-y", // Height for horizontal splits
                         "vertical" => "-x",   // Width for vertical splits
-                        _ => "-x"
+                        _ => "-x",
                     };
-                    
+
                     Command::new("tmux")
-                        .args(["resize-pane", "-t", &index.to_string(), resize_direction, &format!("{}%", percentage)])
+                        .args([
+                            "resize-pane",
+                            "-t",
+                            &index.to_string(),
+                            resize_direction,
+                            &format!("{}%", percentage),
+                        ])
                         .status()
-                        .map_err(|e| format!("Failed to resize pane {} {}: {}", index, resize_direction, e))?;
+                        .map_err(|e| {
+                            format!(
+                                "Failed to resize pane {} {}: {}",
+                                index, resize_direction, e
+                            )
+                        })?;
                 } else {
                     // Fixed size (lines or columns)
                     let size_value = size.parse::<i32>().unwrap_or(10);
                     let resize_direction = match split_direction {
                         "horizontal" => "-y", // Height for horizontal splits
                         "vertical" => "-x",   // Width for vertical splits
-                        _ => "-y"
+                        _ => "-y",
                     };
-                    
+
                     Command::new("tmux")
-                        .args(["resize-pane", "-t", &index.to_string(), resize_direction, &size_value.to_string()])
+                        .args([
+                            "resize-pane",
+                            "-t",
+                            &index.to_string(),
+                            resize_direction,
+                            &size_value.to_string(),
+                        ])
                         .status()
-                        .map_err(|e| format!("Failed to resize pane {} {}: {}", index, resize_direction, e))?;
+                        .map_err(|e| {
+                            format!(
+                                "Failed to resize pane {} {}: {}",
+                                index, resize_direction, e
+                            )
+                        })?;
                 }
             }
         }
@@ -166,14 +188,22 @@ impl LayoutConfig {
                     let percentage = size.trim_end_matches('%');
                     // This controls the overall top/bottom ratio
                     Command::new("tmux")
-                        .args(["resize-pane", "-t", &index.to_string(), "-y", &format!("{}%", percentage)])
+                        .args([
+                            "resize-pane",
+                            "-t",
+                            &index.to_string(),
+                            "-y",
+                            &format!("{}%", percentage),
+                        ])
                         .status()
-                        .map_err(|e| format!("Failed to adjust row height for pane {}: {}", index, e))?;
+                        .map_err(|e| {
+                            format!("Failed to adjust row height for pane {}: {}", index, e)
+                        })?;
                 }
                 break; // Only adjust the first horizontal split
             }
         }
-        
+
         Ok(())
     }
 
