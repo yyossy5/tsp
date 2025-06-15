@@ -1,4 +1,4 @@
-# Web development layout example
+# Development layout example
 workspace:
   name: "dev"
   description: "4-pane layout for development"
