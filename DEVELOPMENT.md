@@ -34,30 +34,15 @@ tmux attach -t test-session
 # Inside tmux session, test the command:
 ./target/debug/tsps 3 .
 ./target/debug/tsps 4 /tmp
+
+./target/debug/tsps -l ./examples/dev.yaml
+./target/debug/tsps -l ./examples/simple.yaml
 ```
 
-## Formatting & Linting
+## Testing & Formatting & Linting
 
 ```bash
+cargo test    # Testing
 cargo fmt     # Formatting
 cargo clippy  # Linting
-```
-
-### Release process
-
-1.  Update version in `Cargo.toml`
-2.  Publish to crates.io: `cargo publish`
-3.  Create a git tag: `git tag v0.1.0`
-4.  Push tag: `git push origin v0.1.0`
-
-## Publishing to crates.io
-
-To publish the crate to crates.io:
-
-```bash
-# Login to crates.io (first time only)
-cargo login
-
-# Publish the crate
-cargo publish
 ```

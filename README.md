@@ -39,6 +39,8 @@ mv tsps ~/.local/bin/
 
 ## Usage
 
+### Basic Usage
+
 ```bash
 # Create 4 panes, all navigated to /path/to/project
 tsps 4 /path/to/project
@@ -50,13 +52,65 @@ tsps 3 .
 tsps 2 ~
 ```
 
+### Layout Files (YAML)
+
+You can define custom layouts using YAML files for more complex workspace setups:
+
+```bash
+# Use a predefined layout file
+tsps --layout examples/dev.yaml
+
+# Or use the short form
+tsps -l examples/simple.yaml
+```
+
+#### Example Layout File
+
+See the examples directory.
+
 ## Features
+
+### Basic Features
 
 - Create specified number of panes in current tmux window
 - All panes automatically navigate to specified directory
 - Alternates between horizontal and vertical splits
 - Automatically arranges panes in tiled layout
 - Error handling (tmux session check, directory validation, etc.)
+
+### Advanced Features (YAML Layouts)
+
+- Define custom workspace layouts with YAML files
+- Execute specific commands in each pane automatically
+- Control pane split directions (horizontal/vertical)
+- Set initial focus on specific panes
+- Add descriptions and identifiers to panes
+- Create reusable workspace templates
+
+### Layout Configuration Options
+
+#### Workspace Settings
+
+- `name`: Layout name for identification
+- `description`: Optional description of the layout
+- `directory`: Base directory for all panes
+
+#### Pane Settings
+
+- `id`: Optional identifier for the pane
+- `split`: Split direction (`horizontal` or `vertical`)
+- `commands`: List of commands to execute in the pane
+- `focus`: Set to `true` to focus this pane initially
+- `size`: Pane size (future feature)
+
+### Example Layout Files
+
+The project includes several example layout files in the `examples/` directory:
+
+- `examples/simple.yaml` - Basic 2-pane editor + terminal setup
+- `examples/dev.yaml` - 4-pane development workspace
+
+Use these as templates for your own custom layouts!
 
 ## Update
 

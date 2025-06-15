@@ -1,6 +1,6 @@
 [package]
 name = "tsps"
-version = "0.1.6"
+version = "0.2.0"
 edition = "2021"
 description = "Quickly set up tmux workspaces by splitting windows into multiple panes"
 license = "MIT"
@@ -17,3 +17,5 @@ path = "src/main.rs"
 
 [dependencies]
 clap = { version = "4.0", features = ["derive"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_yaml = "0.9"
