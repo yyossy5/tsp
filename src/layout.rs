@@ -65,6 +65,9 @@ impl LayoutConfig {
         // Apply layout
         self.arrange_layout()?;
 
+        // Adjust pane sizes
+        self.adjust_pane_sizes()?;
+
         // Execute commands in each pane
         self.execute_commands()?;
 
@@ -93,8 +96,10 @@ impl LayoutConfig {
                 } // Default alternating split
             };
 
+            let args = vec!["split-window", split_direction, "-c", base_path];
+
             Command::new("tmux")
-                .args(["split-window", split_direction, "-c", base_path])
+                .args(&args)
                 .status()
                 .map_err(|e| format!("Failed to create pane {}: {}", index + 1, e))?;
         }
@@ -103,10 +108,72 @@ impl LayoutConfig {
 
     /// Arrange layout
     fn arrange_layout(&self) -> Result<(), Box<dyn std::error::Error>> {
+        // Always apply tiled layout first to create 2x2 grid
         Command::new("tmux")
             .args(["select-layout", "tiled"])
             .status()
             .map_err(|e| format!("Failed to arrange panes: {}", e))?;
+        Ok(())
+    }
+
+    /// Adjust pane sizes after layout is applied
+    fn adjust_pane_sizes(&self) -> Result<(), Box<dyn std::error::Error>> {
+        // Wait a moment for layout to settle
+        std::thread::sleep(std::time::Duration::from_millis(100));
+        
+        // First pass: adjust individual pane sizes
+        for (index, pane) in self.panes.iter().enumerate() {
+            if let Some(size) = &pane.size {
+                let split_direction = pane.split.as_deref().unwrap_or("vertical");
+                
+                if size.ends_with('%') {
+                    let percentage = size.trim_end_matches('%');
+                    
+                    // Resize based on split direction
+                    let resize_direction = match split_direction {
+                        "horizontal" => "-y", // Height for horizontal splits
+                        "vertical" => "-x",   // Width for vertical splits
+                        _ => "-x"
+                    };
+                    
+                    Command::new("tmux")
+                        .args(["resize-pane", "-t", &index.to_string(), resize_direction, &format!("{}%", percentage)])
+                        .status()
+                        .map_err(|e| format!("Failed to resize pane {} {}: {}", index, resize_direction, e))?;
+                } else {
+                    // Fixed size (lines or columns)
+                    let size_value = size.parse::<i32>().unwrap_or(10);
+                    let resize_direction = match split_direction {
+                        "horizontal" => "-y", // Height for horizontal splits
+                        "vertical" => "-x",   // Width for vertical splits
+                        _ => "-y"
+                    };
+                    
+                    Command::new("tmux")
+                        .args(["resize-pane", "-t", &index.to_string(), resize_direction, &size_value.to_string()])
+                        .status()
+                        .map_err(|e| format!("Failed to resize pane {} {}: {}", index, resize_direction, e))?;
+                }
+            }
+        }
+
+        // Second pass: adjust row heights by resizing the first horizontal split
+        // Find the first pane with horizontal split (usually the terminal pane)
+        for (index, pane) in self.panes.iter().enumerate() {
+            if pane.split.as_deref() == Some("horizontal") && pane.size.is_some() {
+                let size = pane.size.as_ref().unwrap();
+                if size.ends_with('%') {
+                    let percentage = size.trim_end_matches('%');
+                    // This controls the overall top/bottom ratio
+                    Command::new("tmux")
+                        .args(["resize-pane", "-t", &index.to_string(), "-y", &format!("{}%", percentage)])
+                        .status()
+                        .map_err(|e| format!("Failed to adjust row height for pane {}: {}", index, e))?;
+                }
+                break; // Only adjust the first horizontal split
+            }
+        }
+        
         Ok(())
     }
 
@@ -175,5 +242,38 @@ panes:
         assert_eq!(config.workspace.name, "test-layout");
         assert_eq!(config.panes.len(), 2);
         assert!(config.panes[0].focus);
+    }
+
+    #[test]
+    fn test_yaml_parsing_with_size() {
+        let yaml_content = r#"
+workspace:
+  name: "test-layout-with-size"
+  description: "Test layout with size specification"
+  directory: "/tmp"
+
+panes:
+  - id: "main"
+    commands:
+      - "echo 'Main pane'"
+    focus: true
+  - id: "sidebar"
+    split: "vertical"
+    size: "30%"
+    commands:
+      - "echo 'Sidebar pane'"
+  - id: "bottom"
+    split: "horizontal"
+    size: "10"
+    commands:
+      - "echo 'Bottom pane'"
+"#;
+
+        let config: LayoutConfig = serde_yaml::from_str(yaml_content).unwrap();
+        assert_eq!(config.workspace.name, "test-layout-with-size");
+        assert_eq!(config.panes.len(), 3);
+        assert!(config.panes[0].focus);
+        assert_eq!(config.panes[1].size, Some("30%".to_string()));
+        assert_eq!(config.panes[2].size, Some("10".to_string()));
     }
 }
