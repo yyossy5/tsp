@@ -51,7 +51,10 @@ fn main() {
     let pane_count = match cli.args[0].parse::<u32>() {
         Ok(count) => count,
         Err(_) => {
-            eprintln!("Error: PANE_COUNT must be a positive integer, got: {}", cli.args[0]);
+            eprintln!(
+                "Error: PANE_COUNT must be a positive integer, got: {}",
+                cli.args[0]
+            );
             exit(1);
         }
     };
@@ -111,10 +114,7 @@ fn main() {
         exit(1);
     }
 
-    println!(
-        "Created {} panes in directory: {}",
-        pane_count, path_str
-    );
+    println!("Created {} panes in directory: {}", pane_count, path_str);
 }
 
 /// Apply layout file

@@ -71,7 +71,10 @@ impl LayoutConfig {
         // Set focus
         self.set_focus()?;
 
-        println!("Applied layout '{}' in directory: {}", self.workspace.name, path_str);
+        println!(
+            "Applied layout '{}' in directory: {}",
+            self.workspace.name, path_str
+        );
         Ok(())
     }
 
@@ -81,7 +84,13 @@ impl LayoutConfig {
             let split_direction = match pane.split.as_deref() {
                 Some("horizontal") => "-v",
                 Some("vertical") => "-h",
-                _ => if index % 2 == 1 { "-h" } else { "-v" }, // Default alternating split
+                _ => {
+                    if index % 2 == 1 {
+                        "-h"
+                    } else {
+                        "-v"
+                    }
+                } // Default alternating split
             };
 
             Command::new("tmux")
@@ -114,7 +123,12 @@ impl LayoutConfig {
                 Command::new("tmux")
                     .args(["send-keys", command, "Enter"])
                     .status()
-                    .map_err(|e| format!("Failed to execute command '{}' in pane {}: {}", command, index, e))?;
+                    .map_err(|e| {
+                        format!(
+                            "Failed to execute command '{}' in pane {}: {}",
+                            command, index, e
+                        )
+                    })?;
             }
         }
         Ok(())
