@@ -2,7 +2,7 @@
 workspace:
   name: "dev"
   description: "4-pane layout for development"
-  directory: "/Users/y_yoshida/Projects/tsps"
+  directory: "/Users/me/Projects/tsps"
 
 panes:
   # Main editor (top-left)
