@@ -61,7 +61,6 @@ tsps 2 ~
 ## Requirements
 
 - tmux
-- bash
 
 ## Update
 
