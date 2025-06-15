@@ -15,12 +15,18 @@ When you push a tag, GitHub Actions automatically executes the following:
 
    - Check if Cargo.toml version matches the tag
 
-3. **crates.io Publication**
+3. **Binary Build**
+
+   - macOS aarch64 (Apple Silicon)
+   - Additional platforms can be easily added to the matrix
+
+4. **crates.io Publication**
 
    - Automatically publish package to crates.io
 
-4. **GitHub Release Creation**
+5. **GitHub Release Creation**
    - Auto-generate release notes and create GitHub Release
+   - Attach pre-built binaries for supported platforms
 
 ## Manual Release Steps
 
@@ -80,4 +86,3 @@ Follows [Semantic Versioning](https://semver.org/):
 ### Check Pipeline Status
 
 You can check workflow execution status in the "Actions" tab on GitHub.
-
