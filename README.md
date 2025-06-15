@@ -62,6 +62,8 @@ git pull origin main
 
 ## Uninstall
 
+### If installed via Cargo
+
 ```bash
-rm ~/.local/bin/tsp
+cargo uninstall tsp
 ```
