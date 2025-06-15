@@ -1,0 +1,31 @@
+# Web development layout example
+workspace:
+  name: "dev"
+  description: "4-pane layout for development"
+  directory: "/Users/y_yoshida/Projects/tsps"
+
+panes:
+  # Main editor
+  - id: "editor"
+    commands:
+      - "nvim ."
+    focus: true
+
+  # Claude Code
+  - id: "claude"
+    split: "horizontal"
+    commands:
+      - "claude"
+
+  # General terminal
+  - id: "terminal"
+    split: "horizontal"
+    commands:
+      - "ls -la"
+
+  # Git operations
+  - id: "git"
+    split: "vertical"
+    commands:
+      - "lazygit"
+

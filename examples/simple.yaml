@@ -1,0 +1,14 @@
+# Simple 2-pane layout
+workspace:
+  name: "simple"
+  description: "2-pane layout with editor and terminal"
+  directory: "."
+
+panes:
+  - id: "editor"
+    commands:
+      - "nvim ."
+    focus: true
+
+  - id: "terminal"
+    split: "horizontal"
