@@ -18,16 +18,10 @@ You can now simply run: `tsp 4 /path/to/project` and get your ideal workspace in
 
 ## Installation
 
-```bash
-git clone https://github.com/yyossy5/tsp.git
-cd tsp
-./install.sh
-```
-
-After installation, restart your shell or run:
+### Via Cargo
 
 ```bash
-source ~/.zshrc  # or ~/.bashrc
+cargo install tsp
 ```
 
 ## Usage
