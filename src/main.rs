@@ -15,6 +15,10 @@ struct Cli {
     #[arg(short, long, value_name = "LAYOUT_FILE")]
     layout: Option<PathBuf>,
 
+    /// Directory to use (overrides layout file directory)
+    #[arg(short, long, value_name = "DIRECTORY")]
+    directory: Option<PathBuf>,
+
     /// Remaining arguments for traditional usage (pane_count and directory)
     #[arg(trailing_var_arg = true, allow_hyphen_values = true)]
     args: Vec<String>,
@@ -31,7 +35,7 @@ fn main() {
 
     // If layout file is specified
     if let Some(layout_file) = cli.layout {
-        match apply_layout_file(&layout_file) {
+        match apply_layout_file(&layout_file, cli.directory.as_ref()) {
             Ok(()) => return,
             Err(e) => {
                 eprintln!("Error: Failed to apply layout: {}", e);
@@ -44,7 +48,7 @@ fn main() {
     if cli.args.len() != 2 {
         eprintln!("Error: Either specify --layout or provide PANE_COUNT and DIRECTORY");
         eprintln!("Usage: tsps <PANE_COUNT> <DIRECTORY>");
-        eprintln!("   or: tsps --layout <LAYOUT_FILE>");
+        eprintln!("   or: tsps --layout <LAYOUT_FILE> [--directory <DIRECTORY>]");
         exit(1);
     }
 
@@ -118,8 +122,17 @@ fn main() {
 }
 
 /// Apply layout file
-fn apply_layout_file(layout_file: &PathBuf) -> Result<(), Box<dyn std::error::Error>> {
-    let layout = LayoutConfig::from_file(layout_file)?;
+fn apply_layout_file(
+    layout_file: &PathBuf,
+    override_directory: Option<&PathBuf>,
+) -> Result<(), Box<dyn std::error::Error>> {
+    let mut layout = LayoutConfig::from_file(layout_file)?;
+
+    // Override directory if specified
+    if let Some(dir) = override_directory {
+        layout.workspace.directory = dir.to_string_lossy().to_string();
+    }
+
     layout.apply_to_tmux()?;
     Ok(())
 }
