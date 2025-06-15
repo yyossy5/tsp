@@ -58,10 +58,6 @@ tsps 2 ~
 - Automatically arranges panes in tiled layout
 - Error handling (tmux session check, directory validation, etc.)
 
-## Requirements
-
-- tmux
-
 ## Update
 
 ### If installed via Cargo
