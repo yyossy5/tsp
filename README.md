@@ -18,16 +18,23 @@ You can now simply run: `tsp 4 /path/to/project` and get your ideal workspace in
 
 ## Installation
 
+### Via Cargo
+
 ```bash
-git clone https://github.com/yyossy5/tsp.git
-cd tsp
-./install.sh
+cargo install tsp
 ```
 
-After installation, restart your shell or run:
+### Via GitHub Release (macOS Apple Silicon)
 
 ```bash
-source ~/.zshrc  # or ~/.bashrc
+# Download the latest release
+curl -L https://github.com/yyossy5/tsp/releases/latest/download/tsp-aarch64-apple-darwin -o tsp
+
+# Make it executable
+chmod +x tsp
+
+# Move to your PATH
+mv tsp ~/.local/bin/
 ```
 
 ## Usage
@@ -67,6 +74,14 @@ git pull origin main
 ```
 
 ## Uninstall
+
+### If installed via Cargo
+
+```bash
+cargo uninstall tsp
+```
+
+### If installed via GitHub Release
 
 ```bash
 rm ~/.local/bin/tsp
