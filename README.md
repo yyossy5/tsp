@@ -14,7 +14,7 @@ TSPS automates this repetitive setup process. Instead of manually:
 2. Navigating to your project directory in each pane with `cd /path/to/project`
 3. Arranging panes to your preferred layout
 
-You can now simply run: `tsps 4 /path/to/project` and get your ideal workspace instantly.
+You can now simply run: `tsps 4 /path/to/project` or `tsps -l dev.yaml` and get your ideal workspace instantly.
 
 ## Installation
 
