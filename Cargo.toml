@@ -1,6 +1,6 @@
 [package]
 name = "tsps"
-version = "0.1.2"
+version = "0.1.3"
 edition = "2021"
 description = "Quickly set up tmux workspaces by splitting windows into multiple panes"
 license = "MIT"
