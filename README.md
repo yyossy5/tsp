@@ -1,5 +1,9 @@
 # TSPS (Tmux Split Panes)
 
+[![Crates.io](https://img.shields.io/crates/v/tsps)](https://crates.io/crates/tsps)
+[![Downloads](https://img.shields.io/crates/d/tsps)](https://crates.io/crates/tsps)
+[![License](https://img.shields.io/crates/l/tsps)](https://github.com/yyossy5/tsps/blob/main/LICENSE)
+
 Quickly set up your tmux workspace by splitting a window into multiple panes at a specified directory with a single command.
 
 ## Problem it solves
