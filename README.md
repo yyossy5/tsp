@@ -65,12 +65,26 @@ tsps 2 ~
 
 ## Update
 
-To update tsps to the latest version:
+### If installed via Cargo
 
 ```bash
-cd /path/to/tsps
-git pull origin main
-./install.sh
+cargo install tsps --force
+
+# If you have cargo-update package
+cargo install-update tsps
+```
+
+### If installed via GitHub Release
+
+```bash
+# Download the latest release
+curl -L https://github.com/yyossy5/tsps/releases/latest/download/tsps-aarch64-apple-darwin -o tsps
+
+# Make it executable
+chmod +x tsps
+
+# Replace the existing binary
+mv tsps ~/.local/bin/
 ```
 
 ## Uninstall
