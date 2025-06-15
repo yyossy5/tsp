@@ -1,7 +1,7 @@
 use clap::Parser;
 use std::env;
 use std::path::{Path, PathBuf};
-use std::process::{exit, Command};
+use std::process::{Command, exit};
 
 mod layout;
 use layout::LayoutConfig;
