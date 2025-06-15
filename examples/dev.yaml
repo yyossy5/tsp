@@ -2,30 +2,33 @@
 workspace:
   name: "dev"
   description: "4-pane layout for development"
-  directory: "/Users/me/Projects/tsps"
+  directory: "/Users/y_yoshida/Projects/tsps"
 
 panes:
-  # Main editor
+  # Main editor (top-left)
   - id: "editor"
     commands:
       - "nvim ."
     focus: true
 
-  # Claude Code
+  # Claude Code (top-right, smaller)
   - id: "claude"
-    split: "horizontal"
+    split: "vertical"
+    size: "38%"
     commands:
       - "claude"
 
-  # General terminal
+  # General terminal (bottom-left)
   - id: "terminal"
     split: "horizontal"
+    size: "30%"
     commands:
       - "ls -la"
 
-  # Git operations
+  # Git operations (bottom-right, larger)
   - id: "git"
     split: "vertical"
+    size: "60%"
     commands:
       - "lazygit"
 
