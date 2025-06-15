@@ -16,6 +16,8 @@ TSPS automates this repetitive setup process. Instead of manually:
 
 You can now simply run: `tsps 4 /path/to/project` or `tsps -l dev.yaml` and get your ideal workspace instantly.
 
+https://github.com/user-attachments/assets/1e17e188-93f1-47e2-b045-bd6a3aefd614
+
 ## Installation
 
 ### Via Cargo
