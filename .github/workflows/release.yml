@@ -42,8 +42,8 @@ jobs:
         include:
           - target: aarch64-apple-darwin
             os: macos-latest
-            artifact_name: tsp
-            asset_name: tsp-macos-aarch64
+            artifact_name: tsps
+            asset_name: tsps-macos-aarch64
     runs-on: ${{ matrix.os }}
     
     steps:
@@ -93,4 +93,4 @@ jobs:
           generate_release_notes: true
           draft: false
           prerelease: false
-          files: "*/tsp*"
+          files: "*/tsps*"

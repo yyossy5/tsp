@@ -1,6 +1,6 @@
 # Release Process
 
-This document describes the release process for tsp.
+This document describes the release process for tsps.
 
 ## Automated Release
 

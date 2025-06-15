@@ -4,7 +4,7 @@ use std::path::Path;
 use std::process::{exit, Command};
 
 #[derive(Parser)]
-#[command(name = "tsp")]
+#[command(name = "tsps")]
 #[command(about = "Quickly set up tmux workspaces by splitting windows into multiple panes")]
 #[command(version)]
 struct Cli {

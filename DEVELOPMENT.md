@@ -8,12 +8,12 @@
 ## Building from source
 
 ```bash
-git clone https://github.com/yyossy5/tsp.git
-cd tsp
+git clone https://github.com/yyossy5/tsps.git
+cd tsps
 cargo build --release
 ```
 
-The binary will be available at `target/release/tsp`.
+The binary will be available at `target/release/tsps`.
 
 ## Testing
 
@@ -24,16 +24,16 @@ To test the command locally without installing:
 cargo build
 
 # Test help and version
-./target/debug/tsp --help
-./target/debug/tsp --version
+./target/debug/tsps --help
+./target/debug/tsps --version
 
 # Test with tmux (must be run inside a tmux session)
 tmux new-session -d -s test-session
 tmux attach -t test-session
 
 # Inside tmux session, test the command:
-./target/debug/tsp 3 .
-./target/debug/tsp 4 /tmp
+./target/debug/tsps 3 .
+./target/debug/tsps 4 /tmp
 ```
 
 ## Formatting & Linting

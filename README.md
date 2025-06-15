@@ -1,4 +1,4 @@
-# TSP (Tmux Split Panes)
+# TSPS (Tmux Split Panes)
 
 Quickly set up your tmux workspace by splitting a window into multiple panes at a specified directory with a single command.
 
@@ -6,48 +6,48 @@ Quickly set up your tmux workspace by splitting a window into multiple panes at 
 
 When working with tmux, you often want to set up the same pane layout repeatedly - multiple panes all navigated to your project directory. Manually splitting panes and navigating each one to the right directory becomes tedious, especially when opening new tmux windows frequently.
 
-![Setup Example](tsp-setup-window.png)
+![Setup Example](tsps-setup-window.png)
 
-TSP automates this repetitive setup process. Instead of manually:
+TSPS automates this repetitive setup process. Instead of manually:
 
 1. Creating each pane
 2. Navigating to your project directory in each pane with `cd /path/to/project`
 3. Arranging panes to your preferred layout
 
-You can now simply run: `tsp 4 /path/to/project` and get your ideal workspace instantly.
+You can now simply run: `tsps 4 /path/to/project` and get your ideal workspace instantly.
 
 ## Installation
 
 ### Via Cargo
 
 ```bash
-cargo install tsp
+cargo install tsps
 ```
 
 ### Via GitHub Release (macOS Apple Silicon)
 
 ```bash
 # Download the latest release
-curl -L https://github.com/yyossy5/tsp/releases/latest/download/tsp-aarch64-apple-darwin -o tsp
+curl -L https://github.com/yyossy5/tsps/releases/latest/download/tsps-aarch64-apple-darwin -o tsps
 
 # Make it executable
-chmod +x tsp
+chmod +x tsps
 
 # Move to your PATH
-mv tsp ~/.local/bin/
+mv tsps ~/.local/bin/
 ```
 
 ## Usage
 
 ```bash
 # Create 4 panes, all navigated to /path/to/project
-tsp 4 /path/to/project
+tsps 4 /path/to/project
 
 # Create 3 panes in current directory
-tsp 3 .
+tsps 3 .
 
 # Create 2 panes in home directory
-tsp 2 ~
+tsps 2 ~
 ```
 
 ## Features
@@ -65,10 +65,10 @@ tsp 2 ~
 
 ## Update
 
-To update tsp to the latest version:
+To update tsps to the latest version:
 
 ```bash
-cd /path/to/tsp
+cd /path/to/tsps
 git pull origin main
 ./install.sh
 ```
@@ -78,11 +78,11 @@ git pull origin main
 ### If installed via Cargo
 
 ```bash
-cargo uninstall tsp
+cargo uninstall tsps
 ```
 
 ### If installed via GitHub Release
 
 ```bash
-rm ~/.local/bin/tsp
+rm ~/.local/bin/tsps
 ```

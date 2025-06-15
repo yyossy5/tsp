@@ -152,7 +152,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "tsp"
+name = "tsps"
 version = "0.1.0"
 dependencies = [
  "clap",
