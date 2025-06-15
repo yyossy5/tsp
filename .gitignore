@@ -1,0 +1,8 @@
+# Rust
+/target/
+
+# macOS
+.DS_Store
+
+# Screenshots (keep specific ones)
+tsp-0.png

@@ -1,0 +1,15 @@
+[package]
+name = "tsp"
+version = "0.1.0"
+edition = "2021"
+description = "Quickly set up tmux workspaces by splitting windows into multiple panes"
+license = "MIT"
+repository = "https://github.com/yyossy5/tsp"
+authors = ["yyossy5 <hm.hr.yossy@gmail.com>"]
+
+[[bin]]
+name = "tsp"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4.0", features = ["derive"] }
