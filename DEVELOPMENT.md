@@ -43,8 +43,21 @@ cargo fmt     # Formatting
 cargo clippy  # Linting
 ```
 
-## Release process
+### Release process
 
-1. Update version in `Cargo.toml`
-2. Create a git tag: `git tag v0.1.0`
-3. Push tag: `git push origin v0.1.0`
+1.  Update version in `Cargo.toml`
+2.  Publish to crates.io: `cargo publish`
+3.  Create a git tag: `git tag v0.1.0`
+4.  Push tag: `git push origin v0.1.0`
+
+## Publishing to crates.io
+
+To publish the crate to crates.io:
+
+```bash
+# Login to crates.io (first time only)
+cargo login
+
+# Publish the crate
+cargo publish
+```
