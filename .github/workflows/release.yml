@@ -47,6 +47,14 @@ jobs:
 
       - name: Publish to crates.io
         run: cargo publish --token ${{ secrets.CARGO_TOKEN }} --allow-dirty
+  
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: taiki-e/create-gh-release-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   upload-assets:
     strategy:
