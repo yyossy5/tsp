@@ -14,7 +14,7 @@ TSPS automates this repetitive setup process. Instead of manually:
 2. Navigating to your project directory in each pane with `cd /path/to/project`
 3. Arranging panes to your preferred layout
 
-You can now simply run: `tsps 4 /path/to/project` or `tsps -l dev.yaml` and get your ideal workspace instantly.
+You can now simply run: `tsps 4 /path/to/project` or `tsps -l dev.yaml -d /path/to/project` and get your ideal workspace instantly.
 
 https://github.com/user-attachments/assets/b80021d8-839e-478e-b532-166b65e7725f
 
@@ -64,6 +64,12 @@ tsps --layout examples/dev.yaml
 
 # Or use the short form
 tsps -l examples/simple.yaml
+
+# Override the directory specified in the layout file
+tsps --layout examples/dev.yaml --directory /path/to/different/project
+
+# Short form with directory override
+tsps -l examples/dev.yaml -d /path/to/project
 ```
 
 #### Example Layout File
@@ -88,6 +94,7 @@ See the examples directory.
 - Set initial focus on specific panes
 - Add descriptions and identifiers to panes
 - Create reusable workspace templates
+- Override layout directory with command line argument
 
 ### Layout Configuration Options
 
@@ -95,7 +102,7 @@ See the examples directory.
 
 - `name`: Layout name for identification
 - `description`: Optional description of the layout
-- `directory`: Base directory for all panes
+- `directory`: Base directory for all panes (can be overridden with `--directory` option)
 
 #### Pane Settings
 
@@ -113,6 +120,19 @@ The project includes several example layout files in the `examples/` directory:
 - `examples/dev.yaml` - 4-pane development workspace
 
 Use these as templates for your own custom layouts!
+
+#### Directory Override
+
+The `--directory` (`-d`) option allows you to reuse the same layout file across different projects:
+
+```bash
+# Use the same layout in different projects
+tsps -l ~/layouts/dev.yaml -d ~/projects/frontend
+tsps -l ~/layouts/dev.yaml -d ~/projects/backend
+tsps -l ~/layouts/dev.yaml -d ~/projects/mobile
+```
+
+This is particularly useful when you have standardized development workflows but work on multiple projects.
 
 #### Size Specification Examples
 
