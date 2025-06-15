@@ -122,14 +122,17 @@ fn main() {
 }
 
 /// Apply layout file
-fn apply_layout_file(layout_file: &PathBuf, override_directory: Option<&PathBuf>) -> Result<(), Box<dyn std::error::Error>> {
+fn apply_layout_file(
+    layout_file: &PathBuf,
+    override_directory: Option<&PathBuf>,
+) -> Result<(), Box<dyn std::error::Error>> {
     let mut layout = LayoutConfig::from_file(layout_file)?;
-    
+
     // Override directory if specified
     if let Some(dir) = override_directory {
         layout.workspace.directory = dir.to_string_lossy().to_string();
     }
-    
+
     layout.apply_to_tmux()?;
     Ok(())
 }
