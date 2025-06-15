@@ -1,2 +1,63 @@
-# tsp
+# TSP (Tmux Split Panes)
+
 Quickly set up your tmux workspace by splitting a window into multiple panes at a specified directory with a single command.
+
+## Problem it solves
+
+When working with tmux, you often want to set up the same pane layout repeatedly - multiple panes all navigated to your project directory. Manually splitting panes and navigating each one to the right directory becomes tedious, especially when opening new tmux windows frequently.
+
+![Setup Example](tsp-setup-window.png)
+
+TSP automates this repetitive setup process. Instead of manually:
+
+1. Creating each pane
+2. Navigating to your project directory in each pane with `cd /path/to/project`
+3. Arranging panes to your preferred layout
+
+You can now simply run: `tsp 4 /path/to/project` and get your ideal workspace instantly.
+
+## Installation
+
+```bash
+git clone https://github.com/yyossy5/tsp.git
+cd tsp
+./install.sh
+```
+
+After installation, restart your shell or run:
+
+```bash
+source ~/.zshrc  # or ~/.bashrc
+```
+
+## Usage
+
+```bash
+# Create 4 panes, all navigated to /path/to/project
+tsp 4 /path/to/project
+
+# Create 3 panes in current directory
+tsp 3 .
+
+# Create 2 panes in home directory
+tsp 2 ~
+```
+
+## Features
+
+- Create specified number of panes in current tmux window
+- All panes automatically navigate to specified directory
+- Alternates between horizontal and vertical splits
+- Automatically arranges panes in tiled layout
+- Error handling (tmux session check, directory validation, etc.)
+
+## Requirements
+
+- tmux
+- bash
+
+## Uninstall
+
+```bash
+rm ~/.local/bin/tsp
+```
