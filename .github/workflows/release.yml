@@ -86,11 +86,11 @@ jobs:
         uses: actions/download-artifact@v4
 
       - name: Create GitHub Release
-        uses: ncipollo/create-release@v1
+        uses: softprops/action-gh-release@v2
         with:
-          tag: ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
-          generateReleaseNotes: true
+          generate_release_notes: true
           draft: false
           prerelease: false
-          artifacts: "*/tsp*"
+          files: "*/tsp*"
