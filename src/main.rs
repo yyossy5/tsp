@@ -84,4 +84,3 @@ fn main() {
         cli.pane_count, path_str
     );
 }
-
