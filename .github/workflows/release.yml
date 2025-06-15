@@ -84,6 +84,11 @@ jobs:
 
       - name: Download all artifacts
         uses: actions/download-artifact@v4
+        with:
+          path: ./artifacts
+
+      - name: Display downloaded artifacts
+        run: find ./artifacts -type f -name "*" | head -20
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
@@ -93,4 +98,4 @@ jobs:
           generate_release_notes: true
           draft: false
           prerelease: false
-          files: "*/tsps*"
+          files: ./artifacts/**/*
