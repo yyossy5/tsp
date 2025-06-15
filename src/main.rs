@@ -1,35 +1,27 @@
 use clap::Parser;
 use std::env;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::process::{exit, Command};
+
+mod layout;
+use layout::LayoutConfig;
 
 #[derive(Parser)]
 #[command(name = "tsps")]
 #[command(about = "Quickly set up tmux workspaces by splitting windows into multiple panes")]
 #[command(version)]
 struct Cli {
-    /// Number of panes to create (including current pane)
-    #[arg(value_name = "PANE_COUNT")]
-    pane_count: u32,
+    /// Layout file to use (YAML format)
+    #[arg(short, long, value_name = "LAYOUT_FILE")]
+    layout: Option<PathBuf>,
 
-    /// Directory to navigate to in all panes
-    #[arg(value_name = "DIRECTORY")]
-    directory: String,
+    /// Remaining arguments for traditional usage (pane_count and directory)
+    #[arg(trailing_var_arg = true, allow_hyphen_values = true)]
+    args: Vec<String>,
 }
 
 fn main() {
     let cli = Cli::parse();
-
-    if cli.pane_count < 1 {
-        eprintln!("Error: pane_count must be a positive integer");
-        exit(1);
-    }
-
-    let target_dir = Path::new(&cli.directory);
-    if !target_dir.exists() {
-        eprintln!("Error: Directory '{}' does not exist", cli.directory);
-        exit(1);
-    }
 
     // Check if we're in a tmux session
     if env::var("TMUX").is_err() {
@@ -37,11 +29,51 @@ fn main() {
         exit(1);
     }
 
+    // If layout file is specified
+    if let Some(layout_file) = cli.layout {
+        match apply_layout_file(&layout_file) {
+            Ok(()) => return,
+            Err(e) => {
+                eprintln!("Error: Failed to apply layout: {}", e);
+                exit(1);
+            }
+        }
+    }
+
+    // Traditional argument-based execution
+    if cli.args.len() != 2 {
+        eprintln!("Error: Either specify --layout or provide PANE_COUNT and DIRECTORY");
+        eprintln!("Usage: tsps <PANE_COUNT> <DIRECTORY>");
+        eprintln!("   or: tsps --layout <LAYOUT_FILE>");
+        exit(1);
+    }
+
+    let pane_count = match cli.args[0].parse::<u32>() {
+        Ok(count) => count,
+        Err(_) => {
+            eprintln!("Error: PANE_COUNT must be a positive integer, got: {}", cli.args[0]);
+            exit(1);
+        }
+    };
+
+    let directory = &cli.args[1];
+
+    if pane_count < 1 {
+        eprintln!("Error: pane_count must be a positive integer");
+        exit(1);
+    }
+
+    let target_dir = Path::new(&directory);
+    if !target_dir.exists() {
+        eprintln!("Error: Directory '{}' does not exist", directory);
+        exit(1);
+    }
+
     // Get absolute path
     let absolute_path = match target_dir.canonicalize() {
         Ok(path) => path,
         Err(e) => {
-            eprintln!("Error: Cannot resolve path '{}': {}", cli.directory, e);
+            eprintln!("Error: Cannot resolve path '{}': {}", directory, e);
             exit(1);
         }
     };
@@ -58,7 +90,7 @@ fn main() {
     }
 
     // Create additional panes (pane_count - 1)
-    for i in 1..cli.pane_count {
+    for i in 1..pane_count {
         let split_direction = if i % 2 == 1 { "-h" } else { "-v" };
 
         if let Err(e) = Command::new("tmux")
@@ -81,6 +113,13 @@ fn main() {
 
     println!(
         "Created {} panes in directory: {}",
-        cli.pane_count, path_str
+        pane_count, path_str
     );
+}
+
+/// Apply layout file
+fn apply_layout_file(layout_file: &PathBuf) -> Result<(), Box<dyn std::error::Error>> {
+    let layout = LayoutConfig::from_file(layout_file)?;
+    layout.apply_to_tmux()?;
+    Ok(())
 }
