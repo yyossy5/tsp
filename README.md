@@ -56,6 +56,16 @@ tsp 2 ~
 - tmux
 - bash
 
+## Update
+
+To update tsp to the latest version:
+
+```bash
+cd /path/to/tsp
+git pull origin main
+./install.sh
+```
+
 ## Uninstall
 
 ```bash
